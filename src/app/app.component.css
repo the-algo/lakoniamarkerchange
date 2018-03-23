@@ -1,0 +1,164 @@
+.row {
+    font-size: 16px;
+}
+
+hr {
+    border-top: 1px solid black;
+}
+
+small {
+    font-size: 9.5px;
+}
+
+.greenColor {
+    color: green;
+}
+
+agm-map {
+    height: 525px;
+}
+
+#Main-Div {
+    min-height: 750px;
+    padding-top: 20px;
+}
+
+.container {
+    padding-top: 20px;
+    font-family: 'sans-serif';
+}
+
+#tooltipDiv {
+    width: 20px;
+    text-align: left;
+}
+
+#tooltipText {
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    #tooltipText {
+        font-size: 10px;
+    }
+    #tooltipDiv {
+        padding-left: 20px;
+        width: 30px;
+    }
+    .row {
+        font-size: 12px;
+    }
+}
+
+.col-md-12 {
+    font-size: 16px;
+}
+
+.breaker {
+    margin-top: 10px;
+    height: 20px;
+    background-color: grey;
+    margin-bottom: 10px;
+}
+
+i:active:after {
+    content: attr(title);
+    padding: 5px 10px;
+    font-size: 13px;
+    line-height: 1.2em;
+    color: white;
+    width: 300px;
+    background: black;
+    display: grid;
+    position: absolute;
+    z-index: 500;
+    word-spacing: -10px;
+    border-radius: 5px;
+}
+
+.tool:active:after {
+    content: 'Partnership Name: LC GoOpCo Manuel #1, LP \aTotal Raise: $850,000 \aTotal Net Revenue Interest (NRI): 56.25% \aUnit Cost: $170,000 \aNumber of Units: 5';
+    white-space: pre;
+    padding: 5px 10px;
+    font-size: 14px;
+    line-height: 1.2em;
+    color: white;
+    width: 300px;
+    background: black;
+    display: inline-block;
+    position: absolute;
+    z-index: 500;
+    word-spacing: 2px;
+    border-radius: 5px;
+}
+
+.round.round-lg {
+    height: 90px;
+    width: 90px;
+    line-height: 90px;
+    -moz-border-radius: 45px;
+    border-radius: 45px;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.round.hollow {
+    display: inline-block;
+    height: 90px;
+    width: 90px;
+    line-height: 90px;
+    -moz-border-radius: 45px;
+    border-radius: 45px;
+    background-color: #FFF;
+    color: rgba(8, 173, 63, 0.75);
+    text-align: center;
+    -webkit-box-shadow: 0px 0px 0px 7px rgba(8, 173, 63, 0.75);
+    -moz-box-shadow: 0px 0px 0px 7px rgba(8, 173, 63, 0.75);
+    box-shadow: 0px 0px 0px 7px rgba(8, 173, 63, 0.75);
+}
+
+#icon1 {
+    color: white;
+    background-color: black;
+    height: 36px;
+    width: 36px;
+    text-align: center;
+    padding: 5px
+}
+
+#icon2 {
+    color: white;
+    background-color: black;
+    height: 36px;
+    width: 36px;
+    text-align: center;
+    padding: 5px
+}
+
+.panel-heading {
+    padding: 0;
+    border-radius: 0;
+    color: #212121;
+    min-height: 48px;
+}
+
+.panel-title {
+    font-size: 22px;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+}
+
+accordion-heading {
+    cursor: pointer;
+}
+
+.table>tbody>tr>td{
+    border-top: none;
+    text-align: center;
+}
+
+.table>tbody>tr>th{
+    border-top: none;
+}

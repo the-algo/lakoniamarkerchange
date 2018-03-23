@@ -1,0 +1,1000 @@
+<div class="container">
+    <div class="row" style="padding-left:5px; padding-right:5px;">
+        <div class="row">
+            <div class="col-md-12" style="font-weight:bold">
+                CLOSE-OLOGY MAP
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="text-align:justify">
+                To use the Close-ology map, simply enter the data requested in the fields below. The map is populated with color coded well
+                points within a predetermined radius of the location selected. The color of each well point reflects an estimated
+                ROI, which in turn is based on the parameters you entered.
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-md-12" style="font-weight:bold">
+                Terms:
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" style="text-align:justify">
+                <u>Oil and Gas price:</u> Choose an oil and gas price and enter it here. Remember, this map is for illustrative
+                purposes only and the oil and gas price you chose will not change for the life of the investment. Since oil
+                and gas prices fluctuate daily the model will not reflect ultimate returns.
+                <br>
+                <br>
+                <u>Production History By Months:</u> This number breaks down the ROI of the well you selected over the first
+                12, 24, 60 and last 12 months of production. Remember ROI, and in turn Production History by Months, is only
+                reflective of the parameters you select, i.e. gas price, oil price, production expenses, daily production
+                etc.
+                <br>
+                <br>
+                <u>Green Circle:</u> The number in the green circle on the left of the page is your OWS Score. It reflects the
+                combined estimated average ROI for all of the well points in the Close-ology map, based on your entered parameters,
+                assuming the data points you entered hold true.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row" style="padding-top:10px">
+        <div class="col-md-7">
+            <div class="row" style="font-weight:bold">
+                <div class="col-md-4" style="padding-top:15px; margin-left:-17px">
+                    <img src="assets/logo.png" height="45px">
+                </div>
+            </div>
+
+            <div class="row" style="margin-left:-27px; padding-top:15px">
+                <div class="col-md-3">
+                    <div class="row" style="text-align:center">
+                        <div class="row">
+                            <div class="col-md-12" title="The OWS Score is the average Return On Investment (ROI) based on reported oil and gas well production surrounding a proposed drilling location applied to a total investment amount, under specific terms described as Net Revenue Interest, oil and gas prices, and production expenses including applicable state taxes."
+                                style="font-size: 23px; font-weight: bold">
+                                SCORE
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12" style="font-size: 16px; font-weight: bold">
+                                AVERAGE ROI
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center; padding-top:10px">
+                            <div class="round round-lg hollow ">{{ ows_score }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-9" style="font-weight:bold;  padding-top:5px">
+                    <div class="row" style="min-height:60px">
+                        <div class="col-md-5">
+                            DRILLING LOCATION:
+                        </div>
+                        <div class="col-md-7">
+                            <img src="assets/star.png" style="margin-top:-13px; height:25px" class="image-responsive" />&nbsp;&nbsp;MANUEL #1
+                            <br>
+                            <b>LAT {{ lati }} &nbsp;&nbsp; LON {{ longi }}</b>
+                        </div>
+
+                    </div>
+
+                    <div class="row" style="min-height:40px">
+                        <div class="col-md-5">
+                            RADIUS:
+                        </div>
+                        <div class="col-md-7">
+                            <input type="radio" id="m1" name="mile" value="1 Mile" (click)="getMiles('One Mile')"> 1 MILE &nbsp;
+                            <input type="radio" id="m2" name="mile" value="3 Miles" (click)="getMiles('Three Miles')"> 3 MILES &nbsp;
+                            <input type="radio" id="m3" name="mile" value="5 Miles" checked="checked" (click)="getMiles('Five Miles')"> 5 MILES
+                        </div>
+                    </div>
+
+                    <div class="row" style="min-height:40px">
+                        <div class="col-md-5">
+                            WELL COUNT:
+                        </div>
+                        <div class="col-md-7">
+                            {{ count }}
+                        </div>
+                    </div>
+
+                    <div class="row" style="min-height:40px">
+                        <div class="col-md-5">
+                            WELL DEPTH:
+                        </div>
+                        <div class="col-md-7">
+                            ALL
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5" style="margin-top:40px; padding-bottom:20px; background-color:rgb(240, 240,240); border-style:solid; border-width: 1px">
+            <div class="row" style="font-size:15px; padding: 10px 10px 0px 25px">
+                <div class="row" style="padding-top:2px">
+                    <div class="col-md-5">Partnership Name:</div>
+                    <div class="col-md-7">{{ partner_name }}</div>
+                </div>
+
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-md-5" style="padding-top: 5px;">Partnership Raise:</div>
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <input type="number" [(ngModel)]="partnership_raise" min="0" (change)="calculate()" class="form-control" />
+                            <span class="input-group-addon" style="font-weight:bold">&nbsp;$&nbsp;</span>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-7">{{ investment_amount | currency:'USD' : true : '2.0-0' }}</div> -->
+                </div>
+
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-md-5" style="padding-top: 5px;">Partnership Terms:</div>
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <input type="number" [(ngModel)]="partnership_term" min="0" (change)="calculate()" class="form-control" />
+                            <span class="input-group-addon" style="font-weight:bold">%</span>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-7">{{ nri_percentage | percent:'2.2-2' }} NRI (Net Revenue Interest)</div> -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" style="padding-top:20px;font-weight:bold; text-align:center">
+                    THIS PARTNERSHIP WILL NEED TO GENERATE
+                    <br /> NET CASH FLOW OF
+                    <br />
+                    <span class="greenColor">{{ partnership_raise | currency:'USD' : true : '2.0-0' }} TO PAYOUT</span>
+                    <br /> ** AFTER: TERMS - PRODUCTION EXPENSES - TAXES **
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="Main-Div">
+        <div class="col-md-6">
+
+            <div class="row">
+                <div class="col-md-12" style="text-align: center; font-weight: bold">
+                    {{ map_title }}
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <agm-map [mapTypeId]="'satellite'" gestureHandling="greedy" [scrollwheel]="false" [zoom]="zoom" [latitude]="lati" [longitude]="longi"
+                        (mapReady)="changeTilt($event)">
+                        <agm-marker *ngFor="let marker of latlong; let pos = index" iconUrl="{{ marker.url }}" (markerClick)="onMarkerClickLocation(pos, infoRef)"
+                            [latitude]="marker.latitude" [longitude]="marker.longitude">
+                            <agm-info-window #infoRef>
+                                <strong>ROI : {{ marker.roi_percentage? marker.roi_percentage : '0' }} %</strong>
+                            </agm-info-window>
+                        </agm-marker>
+                    </agm-map>
+                </div>
+            </div>
+
+            <br>
+
+            <!--             
+            <div class="row" style="padding-left:3px;">
+                <div class="col-md-12">
+                    <ion-range-slider type="single" min="0" max="{{well_count}}" [from]="green_count" (onChange)="myOnChange()" (onFinish)="myOnFinish($event)">
+                    </ion-range-slider>
+                </div>
+            </div>
+
+            <div class="row" style="font-weight: bold">
+                <div class="col-md-12" style="left:2px">
+                    <div id="tooltipDiv" style="position:inherit;" [ngStyle]="{'left': slider_percentage}">
+                        <p id="tooltipText"> {{ tooltip ? (tooltip | currency:'USD' : true : '1.2-2') : (tooltip) }}</p>
+                    </div>
+
+                </div>
+            </div>
+ -->
+            <div class="row">
+                <div class="col-md-12" style="text-align: center">
+                    <button class="btn" (click)="onReload()">Reset Map</button>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-xs-2" style="text-align:center">
+                    <img src="assets/marker/plain/blue.png" height="25px" width="25px">
+                </div>
+                <div class="col-xs-2" style="text-align:center">
+                    <img src="assets/marker/plain/marron.png" height="25px" width="25px">
+                </div>
+                <div class="col-xs-2" style="text-align:center">
+                    <img src="assets/marker/plain/red.png" height="25px" width="25px">
+                </div>
+                <div class="col-xs-2" style="text-align:center">
+                    <img src="assets/marker/plain/orange.png" height="25px" width="25px">
+                </div>
+                <div class="col-xs-2" style="text-align:center">
+                    <img src="assets/marker/plain/yellow.png" height="25px" width="25px">
+                </div>
+                <div class="col-xs-2" style="text-align:center">
+                    <img src="assets/marker/plain/green.png" height="25px" width="25px">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2" style="text-align:center; background-color: #30AAF4; height: 15px"></div>
+                <div class="col-xs-2" style="text-align:center; background-color: #7740A7; height: 15px"></div>
+                <div class="col-xs-2" style="text-align:center; background-color: #F13D38; height: 15px"></div>
+                <div class="col-xs-2" style="text-align:center; background-color: #ED882D; height: 15px"></div>
+                <div class="col-xs-2" style="text-align:center; background-color: #F7EE2B; height: 15px"></div>
+                <div class="col-xs-2" style="text-align:center; background-color: #499130; height: 15px"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2" style="text-align:center; font-size: 11px">0% to 100%</div>
+                <div class="col-xs-2" style="text-align:center; font-size: 11px">101% to 200%</div>
+                <div class="col-xs-2" style="text-align:center; font-size: 11px">201% to 300%</div>
+                <div class="col-xs-2" style="text-align:center; font-size: 11px">301% to 400%</div>
+                <div class="col-xs-2" style="text-align:center; font-size: 11px">401% to 500%</div>
+                <div class="col-xs-2" style="text-align:center; font-size: 11px">501%+</div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-6" style="text-align:center;">
+                    <img src="assets/pointer.png" height="20px" width="22px"> Current Selected
+                </div>
+                <div class="col-xs-6" style="text-align:center;">
+                    <img src="assets/border.png" height="20px" width="25px"> Previous Selected
+                </div>
+            </div>
+            <br>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-9" style="font-size:14px;font-weight: bold">
+                    <img src="assets/pointer.png" height="19px" width="20px" style="margin-left:-2px; margin-top:-8px"> SELECT A WELL FROM THE MAP TO VIEW INDIVIDUAL WELL DATA DIRECT FROM DRILLINGINFO.COM
+                </div>
+
+                <div class="col-md-3">
+                    <img src="assets/drilling.jpg" class="img-responsive" />
+                </div>
+            </div>
+
+            <div class="row" style="padding-left: 15px; padding-top:15px">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">API/UWI
+                                <b>:</b> {{ api_uwi }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Well/Lease Name
+                                <b>:</b> {{ lease_name }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Operator
+                                <b>:</b> {{ operator_name }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Status
+                                <b>:</b> {{ production_status }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">County
+                                <b>:</b> {{ county }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">State
+                                <b>:</b> {{ state }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Drill Type
+                                <b>:</b> {{ drill_type }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Measured Depth(TD)
+                                <b>:</b> {{ measured_depth ? (measured_depth | number) : (measured_depth) }}</div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="row" style="min-height:23px;">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Cumulative Oil
+                                <b>:</b> {{ cum_oil ? (cum_oil | number) : (cum_oil) }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Cumulative Gas
+                                <b>:</b> {{ cum_gas ? (cum_gas | number) : (cum_gas) }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">First Production
+                                <b>:</b> {{ first_prod_date }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Last Production
+                                <b>:</b> {{ last_prod_date }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Reservoir
+                                <b>:</b> {{ reservior }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Longitude
+                                <b>:</b> {{ long }}</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">Latitude
+                                <b>:</b> {{ lat }}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table" style="font-size: 14px;">
+                            <thead>
+                                <tr style="background-color: #93d04f">
+                                    <th>PRODUCTION HISTORY BY MONTHS</th>
+                                    <th style="cursor:pointer; color:blue" (click)="onProductionClick('first12')">FIRST 12</th>
+                                    <th style="cursor:pointer; color:blue" (click)="onProductionClick('first24')">FIRST 24</th>
+                                    <th style="cursor:pointer; color:blue" (click)="onProductionClick('first60')">FIRST 60</th>
+                                    <th style="cursor:pointer; color:blue" (click)="onProductionClick('last12')">LAST 12</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Barrels of Oil</th>
+                                    <td>{{firsttwelveoil ? firsttwelveoil : '0'}}</td>
+                                    <td>{{firsttwentyfouroil ? firsttwentyfouroil : '0'}}</td>
+                                    <td>{{firstsixtyoil ? firstsixtyoil : '0'}}</td>
+                                    <td>{{lasttwelveoil ? lasttwelveoil : '0'}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">MCF of Gas</th>
+                                    <td>{{firsttwelvegas ? firsttwelvegas : '0'}}</td>
+                                    <td>{{firsttwentyfourgas ? firsttwentyfourgas : '0'}}</td>
+                                    <td>{{firstsixtygas ? firstsixtygas : '0'}}</td>
+                                    <td>{{lasttwelvegas ? lasttwelvegas : '0'}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">ROI</th>
+                                    <td class="greenColor" style="font-weight: bold">{{roifirsttwelve}}</td>
+                                    <td class="greenColor" style="font-weight: bold">{{roifirsttwentyfour}}</td>
+                                    <td class="greenColor" style="font-weight: bold">{{roifirstsixty}}</td>
+                                    <td class="greenColor" style="font-weight: bold">{{roilasttwelve}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">Your Oil Price:
+                        <i class="glyphicon glyphicon-question-sign" title="Any amount, in dollars, that you estimate the oil price to be. Price of the Estimated Daily Oil Production to be sold."></i>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="number" [(ngModel)]="oil_price" min="0" (change)="calculate()" class="form-control" />
+                            <span class="input-group-addon" style="font-weight:bold">&nbsp;$&nbsp;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-top:15px">
+                    <div class="col-md-6">Your Gas Price:
+                        <i class="glyphicon glyphicon-question-sign" title="Any amount, in dollars, that you estimate the gas price to be. Price of the Estimated Daily Gas Production to be sold."></i>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="number" [(ngModel)]="gas_price" min="0" (change)="calculate()" class="form-control" />
+                            <span class="input-group-addon" style="font-weight:bold">&nbsp;$&nbsp;</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-top:10px">
+                    <div class="col-md-6">Production Expenses:
+                        <i class="glyphicon glyphicon-question-sign" title="Production Expenses refers to the cost incurred by a well to produce and sell oil and gas. Production Expenses includes a variety of costs including, but not limited to, labor, raw materials, consumable manufacturing supplies and general overhead."></i>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="number" [(ngModel)]="production_expenses" min="0" max="100" (change)="calculate()" class="form-control" />
+                            <span class="input-group-addon" style="font-weight:bold">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-top:10px">
+                    <div class="col-md-6">
+                        Estimated Net Cash Flow:
+                        <i class="glyphicon glyphicon-question-sign" title="Estimated Net Cash Flow = (((Cumulative Oil * Your Oil Price)-4.6%) + ((Cumulative Gas * Your Gas Price)-7.5%) * NRI%) - Production Expenses%"></i>
+                    </div>
+
+                    <div class="col-md-6">
+                        <span [ngStyle]="{'color': textcolor}" style="font-weight:bold"> {{ estimated_gross_cash_flow | currency:'USD' : true : '1.2-2' }}</span>
+                        <small>(Includes {{ nri_percentage | percent:'1.2-2'}} NRI and {{ tax | percent:'1.2-2' }} Texas Oil Tax
+                            and {{ tax_gas | percent:'1.2-2' }} Texas Gas Tax)</small>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-top:10px">
+                    <div class="col-md-6">
+                        Estimated Over/Under Pay Out:
+                        <i class="glyphicon glyphicon-question-sign" title="Estimated Over/Under Pay Out = (Estimated Net Cash Flow - Pay Out Amount)"></i>
+                    </div>
+
+                    <div class="col-md-6">
+                        <span [ngStyle]="{'color': color}" style="font-weight:bold"> {{ potential_profit_loss | currency:'USD' : true : '1.2-2' }}</span> &nbsp;&nbsp;
+                        <b>ROI &nbsp;
+                            <i class="glyphicon glyphicon-question-sign" title="ROI = (Estimated Net Cash Flow/ Hypothetical Investment Amount)"></i>
+                            &nbsp;
+                            <span class="greenColor">{{ roi_percentage }}%</span>
+                        </b>
+                    </div>
+                </div>
+
+
+                <div class="row" style="padding-top:10px">
+                    <div class="col-md-12" style="font-size:14px; text-align:justify; font-weight:bold">
+                        NOTE--CHANGING YOUR OIL PRICE, YOUR GAS PRICE, AND PRODUCTION EXPENSES WILL COMPARE ALL WELLS IN THE WELL COUNT TO THE DATA
+                        ENTERED, WHICH EFFECTS THE OILWELLSTORE.COM SCORE
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <hr style="border-top: 1px solid black;">
+
+    <div class="row">
+        <div class="col-md-12">
+            <accordion>
+                <accordion-group [isOpened]="isOpen">
+                    <accordion-heading id="accordion1" (click)="onclicktoggle('accordion1')">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">
+                                <span id="icon1" class="glyphicon glyphicon-minus"></span> Hope-thetical Price, Production, and Cash Flow Scenarios
+                            </h2>
+                        </div>
+                    </accordion-heading>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="assets/graphics.png" class="image-responsive" />
+                            </div>
+                            <div class="col md-1"></div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align: justify">
+                                        This interactive calculator allows you to input values in order to create a unique investment scenario and preformance expectation
+                                        under the terms of this partnership.
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding-top: 15px">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="tool" title="Partnership Name: LC GoOpCo Manuel #1, LP &#013;&#010;Total Raise: $850,000 &#013;&#010;Total Net Revenue Interest (NRI): 56.25% &#013;&#010;Unit Cost: $170,000 &#013;&#010;Number of Units: 5">
+                                                    <b>
+                                                        LC GoOpCo Manuel #1, LP
+                                                    </b>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                Throckmorton County, Texas
+                                            </div>
+                                        </div>
+                                        <div class="row" style="padding-top: 15px; margin-left: -36px">
+                                            <div class="col-md-12">
+                                                <ul>
+                                                    <li>Vertical Well - 6000' TD</li>
+                                                    <li>Turn Key Drill and Test</li>
+                                                    <li>Full IDC Tax Benefits</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                Total Raise:
+                                            </div>
+                                            <div class="col-md-8">
+                                                {{ partnership_raise | currency:'USD' : true : '2.0-0' }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                Terms:
+                                            </div>
+                                            <div class="col-md-8">
+                                                {{ partnership_term | percent:'2.2-2' }} NRI (Net Revenue Interest)
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                5 Units:
+                                            </div>
+                                            <div class="col-md-8">
+                                                $170,000 Per Unit
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="padding-top: 15px; text-align: justify">
+                                            <div class="col-md-12">
+                                                Each Unit in the program is the economic equivalent of: 14.85% WI and 11.1375% NRI, in the Manuel #1 well.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="border-top: 1px solid #CDCDCD">
+
+                        <div class="row" style="margin-top:25px;">
+                            <div class="col-md-6" style="border-right: 1px solid #CDCDCD">
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-5">
+                                        <b>Est. Daily Oil Production:</b>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_oil_model" min="0" (change)="hypothetical()" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold">BO &nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-5">
+                                        <b>Est. Daily Gas Production:</b>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_gas_model" min="0" (change)="hypothetical()" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold">MCF</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-5">
+                                        <b>Your Est. Oil Price:</b>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_oil_price_model" min="0" (change)="hypothetical()" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold; font-size: 16px">&nbsp;&nbsp;$&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-5">
+                                        <b>Your Est. Gas Price:</b>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_gas_price_model" min="0" (change)="hypothetical()" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold; font-size: 16px">&nbsp;&nbsp;$&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-5">
+                                        <b>Operating Expenses Ratio:</b>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="number" min="0" max="100" [(ngModel)]="Operating_Expenses_Ratio" (change)="hypothetical()" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold; font-size: 16px">&nbsp;% &nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-5">
+                                        <b>Oil-Est. Ultimate Recovery:</b>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_Oil_ultimate_recovery_model" min="0" (change)="hypothetical()" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold">BO &nbsp;&nbsp;</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-5">
+                                        <b>Gas-Est. Ultimate Recovery:</b>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_Gas_ultimate_recovery_model" min="0" (change)="hypothetical()" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold">MCF</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-6">
+                                        <b>Hypothetical Investment Amount:</b>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Hypothetical_investment_model" min="0" (change)="hypothetical()" min="0" class="form-control"
+                                            />
+                                            <span class="input-group-addon" style="font-weight:bold">&nbsp;$&nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-6">Unit Equivalent:</div>
+                                    <div class="col-md-6">{{ unit }}</div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-6">Net Revenue Interest (NRI):</div>
+                                    <div class="col-md-6">{{ Net_Revenue_model | percent }}</div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-6">Est. Monthly Income:</div>
+                                    <div class="col-md-6">{{ Potential_Monthly_model | currency:'USD' : true : '2.2-2' }}</div>
+                                </div>
+
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-6">Months to payout:</div>
+                                    <div class="col-md-6">{{ Months_to_model | number : '1.1-1' }}</div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-6">Est. Months of Cash Flow:
+                                        <i class="glyphicon glyphicon-question-sign" title="Total Potential Months of Cash Flow = (Total Potential Cash Flow/ Potential Monthly Income)"></i>
+                                    </div>
+                                    <div class="col-md-6">{{ Months_to_cash_flow | number : '1.1-1' }}</div>
+                                </div>
+
+                                <div class="row" style="min-height:45px">
+                                    <div class="col-md-6">Est. Net Cash Flow:</div>
+                                    <div class="col-md-6">{{ Total_Potential_model | currency:'USD' : true : '1.2-2' }} &nbsp;&nbsp;
+                                        <b>ROI &nbsp;&nbsp;
+                                            <span class="greenColor">{{ roi_percent }}</span>
+                                        </b>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </accordion-group>
+
+                <br>
+
+                <accordion-group>
+                    <accordion-heading id="accordion2" (click)="onclicktoggle('accordion2')">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">
+                                <span id="icon2" class="glyphicon glyphicon-plus"></span> 2016 K-1 Tax Effect - Explore the Potential Tax Effect of investing in an oil drilling
+                                partnership
+                            </h2>
+                        </div>
+                    </accordion-heading>
+                    <div class="panel-body">
+                        <h3 style="margin-top:-1px;">
+                            <b>Tax Effect</b>
+                        </h3>
+                        <h4>This Tool helps you do two very important things when considering investing in an oil drilling partnership:
+                        </h4>
+                        <ol style="margin-left:-20px">
+                            <li>Estimate the impact of an oil drilling partnership on your Estimated After-Tax Income.</li>
+                            <li>Figure out your optimal Investment Amount for each filing situation, as well as estimate the
+                                number of Actual Dollars at Risk.
+                        </ol>
+
+                        <h4>All you need to do to check out the effect is input:</h4>
+                        <ol style="margin-left:-20px">
+                            <li>Your Estimated Taxable Income, and</li>
+                            <li>Your Tax Filing Status</li>
+                        </ol>
+
+                        <h4>By providing two pieces of information, you will see a side-by-side comparison that the effects could
+                            have on you with or without a K-1.</h4>
+                        <h4 style="text-align:justify">If you have never invested before, you might be wondering what a K-1 is. A Schedule K-1, or K-1,
+                            is a tax document that reports all incomes, deductions, credits and losses associated with your
+                            share of any partnership in which you are participating. Under SEC Regulation D Rule 506(c),
+                            if you participate in a partnership, then the Issuer will provide you with a K-1 for your tax
+                            filing purposes.</h4>
+
+                        <h4 style="text-align:justify">
+                            <b>IMPORTANT:</b> This is not tax advice, but merely an interactive tool showing you the potential
+                            tax benefits associated with investing in an oil drilling partnership</h4>
+
+                        <br>
+
+                        <h3 style="margin-top:10px;">
+                            <b>Tax Effect</b>
+                        </h3>
+
+                        <h4 style="padding-top:15px;">Explore the Potential Tax Effect of investing in an oil drilling partnership.</h4>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-5" style="min-height:30px">
+                                        Estimated Taxable Income
+                                    </div>
+                                    <div class="col-md-5" style="min-height:45px">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Estimated_Taxable_Income_model" min="0" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold">&nbsp;$&nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-5" style="min-height:30px">
+                                        Filing Status
+                                    </div>
+                                    <div class="col-md-5" style="min-height:45px">
+                                        <select class="form-control" (change)="getSelected($event.target.value)">
+                                            <option value="-1">Select Filing Status</option>
+                                            <option value="0">Single</option>
+                                            <option value="1">Married Filing Jointly</option>
+                                            <option value="2">Married Filing Separately</option>
+                                            <option value="3">Head of Household</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2" style="min-height:45px">
+                                        <button class="btn btn-success" (click)="compare_k1()">Compare</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr style="border-top: 1px solid #CDCDCD">
+
+                        <div class="row" style="text-align:center; font-size: x-large">
+                            <div class="col-md-4">
+                                <img src="assets/k-1.png" height="60px" width="60px" />
+                            </div>
+                            <div class="col-md-4" style="padding-top:15px">Compare</div>
+                            <div class="col-md-4" style="padding-top:15px">K-1</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6" style="padding-top:35px; padding-left:25px;">
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-6">
+                                        Tax Bracket
+                                    </div>
+                                    <div class="col-md-5">
+                                        {{Tax_Bracket | percent}}
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-6">
+                                        Investment Amount
+                                    </div>
+                                    <div class="col-md-5">
+                                        $0
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-6">
+                                        Est. Tax Savings
+                                    </div>
+                                    <div class="col-md-5">
+                                        $0
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-6">
+                                        Est. Taxable Income
+                                    </div>
+                                    <div class="col-md-5">
+                                        {{Estimated_Taxable_Income_model | currency:'USD' : true : '1.2-2'}}
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-6">
+                                        Est. Tax Liability
+                                    </div>
+                                    <div class="col-md-5" style="color:red">
+                                        {{Tax_Liability | currency:'USD' : true : '1.2-2' }}
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-6">
+                                        Est. After Tax Income
+                                    </div>
+                                    <div class="col-md-5">
+                                        {{Adjusted_Net_Income | currency:'USD' : true : '1.2-2' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="border-left: 1px solid #CDCDCD; padding-left:25px; padding-top:35px;">
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        Tax Bracket
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{Tax_Bracket_K1 | percent}}
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        Investment Amount
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <input type="number" [(ngModel)]="Investment_Amount_K1_model" min="0" (change)="compare_k2()" class="form-control" />
+                                            <span class="input-group-addon" style="font-weight:bold">&nbsp;$&nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        Est. Tax Savings
+                                    </div>
+                                    <div class="col-md-4" style="color:green">
+                                        {{Tax_Savings_K1 | currency:'USD' : true : '1.2-2' }}
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        Est. Taxable Income
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{Estimated_Taxable_Income_model | currency:'USD' : true : '1.2-2' }}
+                                    </div>
+                                </div>
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                Est. K-1 Deduction
+                                            </div>
+                                            <div class="col-md-5" style="margin-top:-3px;">
+                                                <div class="input-group">
+                                                    <input type="number" [(ngModel)]="k1_deduction_percentage" min="0" max="100" (change)="compare_k2()" class="form-control"
+                                                    />
+                                                    <span class="input-group-addon" style="font-weight:bold">%</span>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ Deduction_K1 | currency:'USD' : true : '1.2-2' }}
+                                    </div>
+                                </div>
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        Est. Adjusted Taxable Income
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{Adjusted_Taxable_Income_K1 | currency:'USD' : true : '1.2-2' }}
+                                    </div>
+                                </div>
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        Est. Tax Liability
+                                    </div>
+                                    <div class="col-md-4" style="color:red">
+                                        {{Tax_Liability_K1 | currency:'USD' : true : '1.2-2' }}
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        Est. After Tax Income
+                                    </div>
+                                    <div class="col-md-4">
+                                        <u>
+                                            <b>{{Adjusted_Net_Income_K1 | currency:'USD' : true : '1.2-2' }}</b>
+                                        </u>
+                                    </div>
+                                </div>
+
+                                <hr style="border-top: 1px solid #CDCDCD">
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        <b>Investment Amount</b>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>{{Partnership_Investment | currency:'USD' : true : '1.2-2' }}</b>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        Est. Net Income Difference
+                                    </div>
+                                    <div class="col-md-4" style="color:red">
+                                        {{Income_Difference | currency:'USD' : true : '1.2-2' }}
+                                    </div>
+                                </div>
+
+                                <div class="row" style="min-height:40px">
+                                    <div class="col-md-7">
+                                        <b>Est. Actual Dollars at Risk</b>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <b>{{Actual_Dollars_At_Risk | currency:'USD' : true : '1.2-2' }}</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
