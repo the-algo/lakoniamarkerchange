@@ -104,8 +104,12 @@ export class AppComponent implements OnInit {
   private timer;
 
   public startYear: number;
+  public year: number;
   public endYear: number;
+  public final: number;
   public count: number;
+  public status: boolean;
+  public hide: boolean = false;
 
   // Dependency Injection
   constructor(private wellapplicationservices: WellApplicationServices) {
@@ -115,10 +119,13 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.timer = Observable.interval(3000);
 
+    // Calling JSON Object for First Time and setting the markers based on decades after 3 seconds
     this.wellapplicationservices.getFiveMilesJSON().subscribe(
       JSONlat => {
-        this.startYear = parseInt(JSONlat[0].year);
+        this.year = parseInt(JSONlat[0].year);
+        this.startYear = this.year - (parseInt(JSONlat[0].year) % 10);
         this.endYear = this.startYear + 10;
+        this.final = parseInt(JSONlat[JSONlat.length - 2].year)
 
         // Fetching value and storing it in Latlong Array
         for (var i = 0; i < JSONlat.length; i++) {
@@ -126,30 +133,18 @@ export class AppComponent implements OnInit {
             error => console.log(error)
         }
 
+        this.status = true;
+
         this.timer.subscribe((t) => {
-          this.onTime();
+          if (this.templatlong.length !== this.latlong.length) {
+            this.onTime();
+          } else {
+            this.hide = true;
+          }
         })
         this.count = JSONlat.length - 1;
-        // this.calculate();
-        // this.calculateows();
       }
     );
-
-    // Calling JSON Object and Parsing Value
-    /*     this.wellapplicationservices.getFiveMilesJSON().subscribe(
-          JSONlat => {
-    
-            // Fetching value and storing it in Latlong Array
-            for (var i = 0; i < JSONlat.length; i++) {
-              this.latlong[i] = JSONlat[i],
-                error => console.log(error)
-            }
-            this.well_count = JSONlat.length - 1;
-            this.calculate();
-            this.calculateows();
-          }
-        ); */
-    // Initial Map Title
     this.map_title = "Overall Production Map";
 
     // Initialize Lower Panels
@@ -157,24 +152,34 @@ export class AppComponent implements OnInit {
     this.intializeData();
   }
 
-  //API Call
+  // Setting the map marker data after every 3 seconds
   onTime() {
-
-    for (var i = 0; i < this.templatlong.length; i++) {
-      if (this.startYear <= this.templatlong[i].year && this.endYear >= this.templatlong[i].year) {
-        this.latlong[i] = this.templatlong[i];
+    if (this.status) {
+      this.latlong.splice(this.latlong.length - 1, 1);
+      var length = this.latlong.length;
+      //this.latlong.delete();
+      for (var i = (length - 1 > 0 ? length : 0); i < this.templatlong.length; i++) {
+        if (this.startYear <= this.templatlong[i].year && this.endYear >= this.templatlong[i].year) {
+          this.latlong[i] = this.templatlong[i];
+        }
       }
+
+      //if (this.latlong.length !== this.templatlong.length && this.latlong.length !== length)
+      if (this.latlong.length !== this.templatlong.length)
+        this.latlong.push(this.templatlong[this.templatlong.length - 1]);
+
+      this.startYear += 10;
+      this.endYear += 10;
+
+      this.well_count = this.latlong.length - 1;
+      this.calculate();
+      this.calculateows();
     }
+  }
 
-    if (this.latlong.length !== this.templatlong.length)
-      this.latlong.push(this.templatlong[this.templatlong.length - 1]);
-
-    this.startYear += 10;
-    this.endYear += 10;
-
-    this.well_count = this.latlong.length - 1;
-    this.calculate();
-    this.calculateows();
+  // Change Status
+  changeStatus() {
+    this.status = !this.status;
   }
 
   // Tilt the Map by 45 degree 
@@ -185,7 +190,34 @@ export class AppComponent implements OnInit {
 
   // Get the selected Miles from the Radio Button to set the markers on Map
   getMiles(miles: string) {
+    // Setting the map based on the selection of the Miles
+    if (miles === "One Mile") {
+      this.wellapplicationservices.getOneMileJSON().subscribe(
+        JSONlat => {
+          this.getData(JSONlat);
+        }
+      );
+    }
 
+    else if (miles === "Three Miles") {
+      this.wellapplicationservices.getThreeMilesJSON().subscribe(
+        JSONlat => {
+          this.getData(JSONlat);
+        }
+      );
+    }
+
+    else {
+      this.wellapplicationservices.getFiveMilesJSON().subscribe(
+        JSONlat => {
+          this.getData(JSONlat);
+        }
+      );
+    }
+  }
+
+
+  getData(array: any) {
     this.oil_price = 0;
     this.gas_price = 0;
     this.infoWindowOpened = null;
@@ -195,160 +227,56 @@ export class AppComponent implements OnInit {
 
     this.map_title = "Overall Production Map";
 
-    // Removing the data from the Latlong Array
-    /*     while (this.latlong.length > 0) {
-          this.latlong.pop();
-        } */
-
     this.latlong.length = 0;
     this.templatlong.length = 0;
 
-    // Setting the map based on the selection of the Miles
-    if (miles === "One Mile") {
-      this.wellapplicationservices.getOneMileJSON().subscribe(
-        JSONlat => {
-          this.startYear = parseInt(JSONlat[0].year);
-          this.endYear = this.startYear + 10;
+    this.year = parseInt(array[0].year);
+    this.startYear = this.year - (parseInt(array[0].year) % 10);
+    this.endYear = this.startYear + 10;
+    this.final = parseInt(array[array.length - 2].year)
 
-          // Fetching value and storing it in Latlong Array
-          for (var i = 0; i < JSONlat.length; i++) {
-            this.templatlong[i] = JSONlat[i],
-              error => console.log(error)
-          }
-
-          this.timer.subscribe((t) => {
-            this.onTime();
-          })
-          this.count = JSONlat.length - 1;
-
-          //console.log(this.latlong);
-
-          this.firstsixtygas = "0";
-          this.firstsixtyoil = "0";
-          this.firsttwelvegas = "0";
-          this.firsttwelveoil = "0";
-          this.firsttwentyfourgas = "0";
-          this.firsttwentyfouroil = "0";
-          this.lasttwelvegas = "0";
-          this.lasttwelveoil = "0";
-
-          this.roifirsttwelve = "0%";
-          this.roifirsttwentyfour = "0%";
-          this.roifirstsixty = "0%";
-          this.roilasttwelve = "0%";
-
-          //this.well_count = JSONlat.length - 1;
-          this.previous = -1;
-          this.current = -1;
-          this.index = -1;
-          this.zoom = 14;
-          this.visit = -1;
-          this.clicked = -1;
-          this.roi_percentage = 0;
-          this.potential_profit_loss = 0;
-          //this.calculate();
-          //this.calculateows();
-          //this.store_display(this.current);
-        }
-      );
+    // Fetching value and storing it in Latlong Array
+    for (var i = 0; i < array.length; i++) {
+      this.templatlong[i] = array[i],
+        error => console.log(error)
     }
 
-    else if (miles === "Three Miles") {
-      this.wellapplicationservices.getThreeMilesJSON().subscribe(
-        JSONlat => {
-          this.startYear = parseInt(JSONlat[0].year);
-          this.endYear = this.startYear + 10;
+    this.status = true;
+    this.hide = false;
+    // Calling to set the markers after every 3 seconds by selecting different mile
+    this.timer.subscribe((t) => {
+      if (this.templatlong.length !== this.latlong.length) {
+        this.onTime();
+      } else {
+        this.hide = true;
+      }
+    })
 
-          // Fetching value and storing it in Latlong Array
-          for (var i = 0; i < JSONlat.length; i++) {
-            this.templatlong[i] = JSONlat[i],
-              error => console.log(error)
-          }
+    this.count = array.length - 1;
 
-          this.timer.subscribe((t) => {
-            this.onTime();
-          })
-          this.count = JSONlat.length - 1;
-          //console.log(this.latlong);
+    // Resetting the data
+    this.firstsixtygas = "0";
+    this.firstsixtyoil = "0";
+    this.firsttwelvegas = "0";
+    this.firsttwelveoil = "0";
+    this.firsttwentyfourgas = "0";
+    this.firsttwentyfouroil = "0";
+    this.lasttwelvegas = "0";
+    this.lasttwelveoil = "0";
 
-          this.firstsixtygas = "0";
-          this.firstsixtyoil = "0";
-          this.firsttwelvegas = "0";
-          this.firsttwelveoil = "0";
-          this.firsttwentyfourgas = "0";
-          this.firsttwentyfouroil = "0";
-          this.lasttwelvegas = "0";
-          this.lasttwelveoil = "0";
+    this.roifirsttwelve = "0%";
+    this.roifirsttwentyfour = "0%";
+    this.roifirstsixty = "0%";
+    this.roilasttwelve = "0%";
 
-          this.roifirsttwelve = "0%";
-          this.roifirsttwentyfour = "0%";
-          this.roifirstsixty = "0%";
-          this.roilasttwelve = "0%";
-
-          //this.well_count = JSONlat.length - 1;
-          this.previous = -1;
-          this.current = -1;
-          this.index = -1;
-          this.zoom = 12;
-          this.visit = -1;
-          this.clicked = -1;
-          this.roi_percentage = 0;
-          this.potential_profit_loss = 0;
-          //this.calculate();
-          //this.calculateows();
-          //this.store_display(this.current);
-        }
-      );
-    }
-
-    else {
-      this.wellapplicationservices.getFiveMilesJSON().subscribe(
-        JSONlat => {
-          this.startYear = parseInt(JSONlat[0].year);
-          this.endYear = this.startYear + 10;
-
-          // Fetching value and storing it in Latlong Array
-          for (var i = 0; i < JSONlat.length; i++) {
-            this.templatlong[i] = JSONlat[i],
-              error => console.log(error)
-          }
-
-          this.timer.subscribe((t) => {
-            this.onTime();
-          })
-          this.count = JSONlat.length - 1;
-
-          //console.log(this.latlong);
-
-          this.firstsixtygas = "0";
-          this.firstsixtyoil = "0";
-          this.firsttwelvegas = "0";
-          this.firsttwelveoil = "0";
-          this.firsttwentyfourgas = "0";
-          this.firsttwentyfouroil = "0";
-          this.lasttwelvegas = "0";
-          this.lasttwelveoil = "0";
-
-          this.roifirsttwelve = "0%";
-          this.roifirsttwentyfour = "0%";
-          this.roifirstsixty = "0%";
-          this.roilasttwelve = "0%";
-
-          //this.well_count = JSONlat.length - 1;
-          this.previous = -1;
-          this.current = -1;
-          this.index = -1;
-          this.zoom = 11;
-          this.visit = -1;
-          this.clicked = -1;
-          this.roi_percentage = 0;
-          this.potential_profit_loss = 0;
-          //this.calculate();
-          //this.calculateows();
-          //this.store_display(this.current);
-        }
-      );
-    }
+    this.previous = -1;
+    this.current = -1;
+    this.index = -1;
+    this.zoom = 11;
+    this.visit = -1;
+    this.clicked = -1;
+    this.roi_percentage = 0;
+    this.potential_profit_loss = 0;
   }
 
   // Dynamically changing the Estimated Gross Cash Flow Value

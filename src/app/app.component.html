@@ -204,6 +204,44 @@
             </div>
  -->
             <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" [ngStyle]="{ 'width': ((well_count * 100)/count) + '%' }">
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:-20px">
+                                <div class="col-xs-4">
+                                    {{ year }}
+                                </div>
+
+                                <div class="col-xs-4" style="text-align:center; font-weight:bold">
+                                    {{ well_count }}
+                                </div>
+
+                                <div class="col-xs-4" style="text-align:right">
+                                    {{ final }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="!hide">
+                <div class="col-md-12" style="text-align: center">
+                    <br>
+                    <button class="btn" (click)="changeStatus(); onTime()">
+                        <i class="glyphicon glyphicon-{{ status ? 'pause' : 'play' }}"></i> {{ status ? 'Pause' : 'Resume' }}
+                    </button>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
                 <div class="col-md-12" style="text-align: center">
                     <button class="btn" (click)="onReload()">Reset Map</button>
                 </div>
