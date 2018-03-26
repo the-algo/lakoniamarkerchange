@@ -166,6 +166,9 @@
                 <div class="col-md-12" style="text-align: center; font-weight: bold">
                     {{ map_title }}
                 </div>
+                <div class="col-md-12" style="text-align: center;">
+                    <button class="btn" (click)="onReload()">Reset Map</button>
+                </div>
             </div>
 
             <br>
@@ -208,7 +211,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="progress">
-                                <div class="progress-bar progress-bar-success" [ngStyle]="{ 'width': ((well_count * 100)/count) + '%' }">
+                                <div class="progress-bar" style="color: #778899" [ngStyle]="{ 'width': ((well_count * 100)/count) + '%' }">
                                 </div>
                             </div>
 
@@ -238,14 +241,12 @@
                     </button>
                 </div>
             </div>
-
-            <br>
-
+            <!-- 
             <div class="row">
                 <div class="col-md-12" style="text-align: center">
                     <button class="btn" (click)="onReload()">Reset Map</button>
                 </div>
-            </div>
+            </div> -->
 
             <br>
 
