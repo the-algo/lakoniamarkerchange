@@ -29,12 +29,11 @@ agm-map {
 }
 
 #tooltipDiv {
-    width: 20px;
     text-align: left;
 }
 
 #tooltipText {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 @media (max-width: 600px) {
